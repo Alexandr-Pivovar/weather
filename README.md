@@ -8,3 +8,9 @@ make
 ```
 
 Binary file will be saved in bin/weather
+
+How to use:
+
+```bash
+weather <country> <city>
+```
