@@ -13,8 +13,10 @@ import (
 	"weather/manager"
 )
 
+const apiName = "api.weatherbit.io"
+
 func New(config map[string]interface{}) *weatherApi {
-	apiKey := config["api.weatherbit.io"].(map[string]interface{})["apiKey"].(string)
+	apiKey := config[apiName].(map[string]interface{})["apiKey"].(string)
 	return &weatherApi{
 		apiKey: apiKey,
 	}
@@ -35,7 +37,7 @@ func (w weatherApi) Get(ctx context.Context, location manager.Location) (manager
 
 	go func() {
 		params := map[string]string{
-			"key":        "d5ea8363334841babd9f3880490a3a8d",
+			"key":        w.apiKey,
 			"start_date": fmt.Sprintf("%s:00", location.Time.Format("2006-1-02")),
 			"end_date":   location.Time.Format("2006-1-02:15"),
 		}
@@ -62,7 +64,7 @@ func (w weatherApi) Get(ctx context.Context, location manager.Location) (manager
 
 	go func() {
 		params := map[string]string{
-			"key":   "d5ea8363334841babd9f3880490a3a8d",
+			"key":   w.apiKey,
 			"hours": "24",
 		}
 
@@ -120,7 +122,7 @@ func (w weatherApi) Get(ctx context.Context, location manager.Location) (manager
 					return info.Temperature[i].Timestamp < info.Temperature[j].Timestamp
 				})
 
-				info.Provider = "api.weatherbit.io"
+				info.Provider = apiName
 				info.Location.Country = location.Country
 				return info.Info, nil
 			} else {

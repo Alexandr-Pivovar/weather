@@ -14,8 +14,10 @@ import (
 	"weather/manager"
 )
 
+const apiName = "api.weatherapi.com"
+
 func New(config map[string]interface{}) *weatherApi {
-	apiKey := config["api.weatherapi.com"].(map[string]interface{})["apiKey"].(string)
+	apiKey := config[apiName].(map[string]interface{})["apiKey"].(string)
 	return &weatherApi{
 		apiKey: apiKey,
 	}
@@ -122,7 +124,7 @@ func (w weatherApi) Get(ctx context.Context, location manager.Location) (manager
 					return info.Temperature[i].Timestamp < info.Temperature[j].Timestamp
 				})
 
-				info.Provider = "api.weatherapi.com"
+				info.Provider = apiName
 				return info.Info, nil
 			} else {
 				interrupt = true

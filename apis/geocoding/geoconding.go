@@ -24,7 +24,7 @@ type geocoding struct {
 
 func (g geocoding) Get(ctx context.Context, location manager.Location) (manager.Location, error) {
 	params := map[string]string{
-		"api_key": "67595f25254ad894267079ozb396c37",
+		"api_key": g.apiKey,
 		"q":       fmt.Sprintf("%s,%s", location.Country, location.City),
 	}
 
